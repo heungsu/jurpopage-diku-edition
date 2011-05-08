@@ -13,6 +13,12 @@ if(is_array($HTTP_GET_VARS)) extract($HTTP_GET_VARS,EXTR_SKIP);
 if($HTTP_POST_VARS[action])
 {
 	extract($HTTP_POST_VARS,EXTR_OVERWRITE);
+	// Removing the possibility to run scripts/tags
+	$bad_stuff	= array("&", "<", ">", chr(34), "'", "/");
+	$escaped	= array("&amp;", "&lt;", "&gt;", "&quot;", "&#x27;", "&#x2F;");
+	$note_title = str_replace($bad_stuff, $escaped, $note_title);
+	$note_text 	= str_replace($bad_stuff, $escaped, $note_text);
+	
 	$note_date = reverse_date($note_date);
 	if($note_special) $status_berita = "TRUE";
 	else $status_berita = "FALSE";

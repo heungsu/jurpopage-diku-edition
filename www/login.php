@@ -47,6 +47,9 @@ if($HTTP_POST_VARS[action])
 		if ($mRet[0]>0) {
 			//proses
 			while($rows = fn_fetch_array($result)) extract($rows,EXTR_OVERWRITE);
+			// Escaping user and password
+			$send_user = mysql_real_escape_string($send_user);
+			$password = mysql_real_escape_string($password);
 			$password = md5($password);
 			$query = "
 			SELECT 
